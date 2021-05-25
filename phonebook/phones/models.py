@@ -8,6 +8,7 @@ class Entry(models.Model):
     """
     An entry in the phonebook
     """
+    created_at = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     phone_number = models.CharField(validators=[phone_regex], max_length=11, unique=True)

@@ -1,0 +1,40 @@
+{% load static %}
+<html>
+<head>
+    <title>سرچ در دفترچه</title>
+    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+</head>
+<body>
+<h1>Search in Phonebook</h1>
+
+<form>
+    <label for="query">Enter phone number:</label>
+    <input type="text" id="query">
+</form>
+<button id="search-btn">🔎</button>
+<div id="output-div"></div>
+
+<script>
+    $(document).ready(function () {
+        $('#search-btn').click(function () {
+            var query_text = $('#query').val();
+            var ajax_config = {
+                url: '/phones/find/',
+                data: {
+                    phonenum: query_text
+                },
+                method: 'get',
+                success: function (response) {
+                    var my_output_div = $('#output-div');
+                    $(response.results).each(function (index, obj){
+                        var my_table = '<tr><td>'+obj.name+'</td></tr>';
+                        my_output_div.append(my_table);
+                    });
+                }
+            };
+            $.ajax(ajax_config);
+        });
+    });
+</script>
+</body>
+</html>
